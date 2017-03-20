@@ -34,6 +34,15 @@ body
 
 .image-thumb
   size(calc(100vw / 4), 15em, 25em)
+
+  background-color: black
   background-size: cover
   background-position: top center
-  box-shadow: 0 4px 8px rgba(black, 0.3)
+  background-repeat: no-repeat
+
+  box-shadow: 0 3px 6px rgba(black, 0.25)
+
+  transition: 0.2s
+  &:hover
+    opacity: 0.8
+    cursor: pointer
