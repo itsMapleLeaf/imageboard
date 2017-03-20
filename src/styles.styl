@@ -1,3 +1,8 @@
+fullscreen($position = absolute)
+  position: $position
+  width: 100vw
+  height: 100vh
+
 size(value, min-value, max-value)
   width: value
   height: value
@@ -9,6 +14,14 @@ size(value, min-value, max-value)
   if max-value
     max-width: max-value
     max-height: max-value
+
+show($visible)
+  if $visible
+    visibility: visible
+    opacity: 1
+  else
+    visibility: hidden
+    opacity: 0
 
 *
   padding: 0
@@ -46,3 +59,24 @@ body
   &:hover
     opacity: 0.8
     cursor: pointer
+
+.overlay-shade
+  fullscreen()
+
+  background-color: rgba(black, 0.7)
+
+  display: flex
+  padding: 4em
+  overflow-y: auto
+
+  .overlay-content
+    margin: auto
+    box-shadow: 0 3px 10px rgba(black, 0.25)
+
+    img
+      display: block
+
+  transition: 0.2s
+  show(false)
+  &--visible
+    show(true)
