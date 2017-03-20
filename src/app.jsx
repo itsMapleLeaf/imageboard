@@ -68,7 +68,7 @@ export function view (model: Model, actions: Actions) {
     <main>
       <ImageList images={model.images} onimageclick={actions.handleImageClicked} />
       <Overlay open={model.imageOverlay.open} onclose={actions.handleOverlayClosed}>
-        <img src={model.imageOverlay.image} style='display: block; width: 100%' />
+        <img src={model.imageOverlay.image} style={{ display: 'block', width: '100%' }} />
       </Overlay>
     </main>
   )
