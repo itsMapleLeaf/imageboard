@@ -62,17 +62,17 @@ export function view (model: Model, actions: Actions) {
     <main>
       <ImageList images={model.images} onimageclicked={actions.handleImageClicked} />
       <Overlay open={model.imageOverlay.open} onclose={actions.handleOverlayClosed}>
-        <img src={model.imageOverlay.image} />
+        <img src={model.imageOverlay.image} style={{ display: 'block', width: '100%' }} />
       </Overlay>
     </main>
   )
 }
 
-function ImageList ({ images, onimageclicked }: { images: string[], onimageclicked: (image: string) => any }) {
-  const imageElements = images.map(image =>
+function ImageList (props: { images: string[], onimageclicked: (image: string) => any }) {
+  const imageElements = props.images.map(image =>
     <div class='image-thumb'
       style={{ backgroundImage: `url(${image})` }}
-      onclick={e => onimageclicked(image)} />
+      onclick={e => props.onimageclicked(image)} />
   )
 
   return (
@@ -82,10 +82,10 @@ function ImageList ({ images, onimageclicked }: { images: string[], onimageclick
   )
 }
 
-function Overlay ({ open, onclose }: { open: boolean, onclose: () => any }, children) {
-  const overlayClass = 'overlay-shade ' + (open ? 'overlay-shade--visible' : '')
+function Overlay (props: { open: boolean, onclose: () => any }, children) {
+  const overlayClass = 'overlay-shade ' + (props.open ? 'overlay-shade--visible' : '')
   return (
-    <div class={overlayClass} onclick={onlyOnSelf(onclose)}>
+    <div class={overlayClass} onclick={onlyOnSelf(props.onclose)}>
       <div class='overlay-content'>
         {children}
       </div>
