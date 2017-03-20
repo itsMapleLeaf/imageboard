@@ -60,17 +60,19 @@ export const actions = {
 export function view (model: Model, actions: Actions) {
   return (
     <main>
-      {renderImageList(model.images, actions)}
-      {renderImageOverlay(model.imageOverlay, actions)}
+      <ImageList images={model.images} onimageclicked={actions.handleImageClicked} />
+      <Overlay open={model.imageOverlay.open} onclose={actions.handleOverlayClosed}>
+        <img src={model.imageOverlay.image} />
+      </Overlay>
     </main>
   )
 }
 
-function renderImageList (images: string[], actions: Actions) {
+function ImageList ({ images, onimageclicked }: { images: string[], onimageclicked: (image: string) => any }) {
   const imageElements = images.map(image =>
     <div class='image-thumb'
       style={{ backgroundImage: `url(${image})` }}
-      onclick={e => actions.handleImageClicked(image)} />
+      onclick={e => onimageclicked(image)} />
   )
 
   return (
@@ -80,12 +82,12 @@ function renderImageList (images: string[], actions: Actions) {
   )
 }
 
-function renderImageOverlay (overlay: ImageOverlay, actions: Actions) {
-  const overlayClass = 'overlay-shade ' + (overlay.open ? 'overlay-shade--visible' : '')
+function Overlay ({ open, onclose }: { open: boolean, onclose: () => any }, children) {
+  const overlayClass = 'overlay-shade ' + (open ? 'overlay-shade--visible' : '')
   return (
-    <div class={overlayClass} onclick={onlyOnSelf(actions.handleOverlayClosed)}>
+    <div class={overlayClass} onclick={onlyOnSelf(onclose)}>
       <div class='overlay-content'>
-        <img src={overlay.image} />
+        {children}
       </div>
     </div>
   )
