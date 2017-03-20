@@ -4,24 +4,24 @@ import './styles.styl'
 
 function onlyOnSelf (action: (...args: any[]) => any) {
   return (e: Event) => {
-    if (e.target === e.currentTarget) {
-      action()
-    }
+    if (e.target === e.currentTarget) action()
     return e
   }
 }
 
+type ImageOverlay = {
+  open: boolean,
+  image: string,
+}
+
 type Model = {
   images: string[],
-  imageOverlay: {
-    open: boolean,
-    image: string,
-  }
+  imageOverlay: ImageOverlay,
 }
 
 type Actions = {
-  openOverlay(image: string): void,
-  closeOverlay(): void
+  handleImageClicked(image: string): void,
+  handleOverlayClosed(): void
 }
 
 export const model: Model = {
@@ -38,7 +38,7 @@ export const model: Model = {
 }
 
 export const actions = {
-  openOverlay (model: Model, image: string) {
+  handleImageClicked (model: Model, image: string) {
     return {
       imageOverlay: {
         open: true,
@@ -47,7 +47,7 @@ export const actions = {
     }
   },
 
-  closeOverlay (model: Model) {
+  handleOverlayClosed (model: Model) {
     return {
       imageOverlay: {
         open: false,
@@ -60,19 +60,33 @@ export const actions = {
 export function view (model: Model, actions: Actions) {
   return (
     <main>
-      <div class='image-list'>
-        {model.images.map(image =>
-          <div class='image-thumb'
-            style={{ backgroundImage: `url(${image})` }}
-            onclick={e => actions.openOverlay(image)} />
-        )}
-      </div>
-      <div class={'overlay-shade ' + (model.imageOverlay.open ? 'overlay-shade--visible' : '')}
-        onclick={onlyOnSelf(actions.closeOverlay)}>
-        <div class='overlay-content'>
-          <img src={model.imageOverlay.image} />
-        </div>
-      </div>
+      {renderImageList(model.images, actions)}
+      {renderImageOverlay(model.imageOverlay, actions)}
     </main>
+  )
+}
+
+function renderImageList (images: string[], actions: Actions) {
+  const imageElements = images.map(image =>
+    <div class='image-thumb'
+      style={{ backgroundImage: `url(${image})` }}
+      onclick={e => actions.handleImageClicked(image)} />
+  )
+
+  return (
+    <div class='image-list'>
+      {imageElements}
+    </div>
+  )
+}
+
+function renderImageOverlay (overlay: ImageOverlay, actions: Actions) {
+  const overlayClass = 'overlay-shade ' + (overlay.open ? 'overlay-shade--visible' : '')
+  return (
+    <div class={overlayClass} onclick={onlyOnSelf(actions.handleOverlayClosed)}>
+      <div class='overlay-content'>
+        <img src={overlay.image} />
+      </div>
+    </div>
   )
 }
