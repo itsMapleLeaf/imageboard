@@ -10,7 +10,9 @@ type Model = {
   }
 }
 
-type Actions = {}
+type Actions = {
+  closeOverlay(): void
+}
 
 export const model: Model = {
   images: [
@@ -25,7 +27,16 @@ export const model: Model = {
   }
 }
 
-export const actions = {}
+export const actions = {
+  closeOverlay () {
+    return {
+      imageOverlay: {
+        open: false,
+        image: ''
+      }
+    }
+  }
+}
 
 export function view (model: Model, actions: Actions) {
   return (
@@ -35,7 +46,7 @@ export function view (model: Model, actions: Actions) {
           <div class='image-thumb' style={{ backgroundImage: `url(${src})` }} />
         )}
       </div>
-      <div class={'overlay-shade ' + (model.imageOverlay.open ? 'overlay-shade--visible' : '')}>
+      <div class={'overlay-shade ' + (model.imageOverlay.open ? 'overlay-shade--visible' : '')} onclick={actions.closeOverlay}>
         <div class='overlay-content'>
           <img src={model.imageOverlay.image} />
         </div>
