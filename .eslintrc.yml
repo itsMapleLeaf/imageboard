@@ -1,6 +1,9 @@
 extends:
   - standard
   - plugin:react/recommended
+env:
+  browser: yes
+  node: yes
 parser: babel-eslint
 plugins:
   - standard
