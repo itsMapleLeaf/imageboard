@@ -10,11 +10,13 @@ module.exports = function (env = {}) {
     output: {
       filename: 'bundle.js',
       path: path.resolve(__dirname, outPath),
-      publicPath: '/',
+      publicPath: '/'
     },
     module: {
       rules: [
         { test: /\.jsx?$/, use: 'babel-loader', exclude: /node_modules/ },
+        { test: /\.(png|jpg)$/, use: 'file-loader' },
+        { test: /\.styl$/, loader: 'style-loader!css-loader!stylus-loader' }
       ]
     },
     resolve: {

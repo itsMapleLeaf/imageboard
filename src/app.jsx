@@ -1,25 +1,30 @@
 // @flow
 import {h} from 'hyperapp'
+import './styles.styl'
 
-type Actions = {
-  updateMessage(message: string): void,
+type Model = {
+  images: string[]
 }
 
-export const model = {
-  message: 'Hello, world',
+type Actions = {}
+
+export const model: Model = {
+  images: [
+    require('./test1.png'),
+    require('./test2.png'),
+    require('./test3.jpg'),
+    require('./test4.png')
+  ]
 }
 
-export const actions = {
-  updateMessage (model: typeof model, message: string) {
-    return { message }
-  },
-}
+export const actions = {}
 
-export function view (model: typeof model, actions: Actions) {
+export function view (model: Model, actions: Actions) {
   return (
-    <div>
-      <input type='text' value={model.message} oninput={e => actions.updateMessage(e.target.value)} />
-      <h1>{model.message}</h1>
+    <div class='image-list'>
+      {model.images.map(src =>
+        <div class='image-thumb' style={{ backgroundImage: `url(${src})` }} />
+      )}
     </div>
   )
 }
