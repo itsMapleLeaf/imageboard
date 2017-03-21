@@ -1,19 +1,7 @@
 // @flow
 import {h} from 'hyperapp'
+import {onlyOnSelf, preventDefault} from './util'
 import './styles.styl'
-
-function onlyOnSelf (action: (...args: any[]) => any) {
-  return (e: Event) => {
-    if (e.target === e.currentTarget) action(e)
-  }
-}
-
-function preventDefault (action: (...args: any[]) => any) {
-  return (e: Event) => {
-    e.preventDefault()
-    action(e)
-  }
-}
 
 type ImageOverlay = {
   open: boolean,
@@ -78,14 +66,11 @@ function ImageList (props: { images: string[], onimageclick: (image: string) => 
   const imageElements = props.images.map(image =>
     <a href='#' class='image-thumb'
       style={{ backgroundImage: `url(${image})` }}
-      onpointerdown={preventDefault(() => props.onimageclick(image))} />
+      onpointerdown={preventDefault(() => props.onimageclick(image))}
+    />
   )
 
-  return (
-    <div class='image-list'>
-      {imageElements}
-    </div>
-  )
+  return <div class='image-list'>{imageElements}</div>
 }
 
 function Overlay (props: { open: boolean, onclose: () => any }, children) {
