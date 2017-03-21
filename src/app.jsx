@@ -32,10 +32,10 @@ type Actions = {
 
 export const model: Model = {
   images: [
-    require('./test1.png'),
-    require('./test2.png'),
-    require('./test3.jpg'),
-    require('./test4.png')
+    require('./images/test1.png'),
+    require('./images/test2.png'),
+    require('./images/test3.jpg'),
+    require('./images/test4.png')
   ],
   imageOverlay: {
     open: false,
