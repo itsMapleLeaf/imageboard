@@ -3,6 +3,9 @@ import {h} from 'hyperapp'
 import {onlyOnSelf, preventDefault} from './util'
 import './styles.styl'
 
+/**
+ * Model
+ */
 type ImageOverlay = {
   open: boolean,
   image: string,
@@ -11,11 +14,6 @@ type ImageOverlay = {
 type Model = {
   images: string[],
   imageOverlay: ImageOverlay,
-}
-
-type Actions = {
-  handleImageClicked(image: string): void,
-  handleOverlayClosed(): void
 }
 
 export const model: Model = {
@@ -29,6 +27,14 @@ export const model: Model = {
     open: false,
     image: ''
   }
+}
+
+/**
+ * Actions
+ */
+type Actions = {
+  handleImageClicked(image: string): void,
+  handleOverlayClosed(): void
 }
 
 export const actions = {
@@ -51,6 +57,9 @@ export const actions = {
   }
 }
 
+/**
+ * View
+ */
 export function view (model: Model, actions: Actions) {
   return (
     <main>
